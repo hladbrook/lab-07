@@ -81,7 +81,7 @@ summary(share_fit)
 
 augmented_data <- augment(share_fit) 
 ggplot(augmented_data, aes(x = .fitted, y = .resid)) +
-  geom_point(alpha = 0.75) +
+  geom_point() +
   geom_hline(yintercept = 0, linetype = "dashed", colour = "red") +
   labs(
     title = "Residual Plot",
@@ -95,13 +95,29 @@ ggplot(augmented_data, aes(x = .fitted, y = .resid)) +
 
 fitted model equation: predicted median = 56093 - 30670 x sharewomen
 
+there is no clear pattern between residuals and predicted values but they are fairly randomly scattered around the 0 line
+
 # Exercise 4: Consider a categorical variable instead 
 
 ```{r}
 #your code here
+
+college_recent_grads <- college_recent_grads %>%
+  mutate(Engineering =
+           case_when(
+             major_category == "Engineering" ~ "Engineering",
+             TRUE ~ "Other"
+           ))
+
+Engineering_fit <- lm(median ~ Engineering, data = college_recent_grads)
+summary(Engineering_fit)
 ```
 
 *Your explanation*
+
+b) the baseline is engineering. the model predicting median from egineering is:
+
+predicted median = 57383 - 20702x Engineering
 
 ---
 
