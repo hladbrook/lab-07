@@ -49,17 +49,51 @@ The distribution has a positive skew. The Major category with teh highest median
 
 ```{r}
 #your code here
+
+college_recent_grads %>%
+  filter(na.rm = TRUE) %>%
+  ggplot(aes(x = sharewomen, y = median)) +
+  geom_point() + 
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Do majors with a higher share of women have lower median earnings?",
+    x = "Share of Women",
+    y = "Median Earnings"
+  ) +
+  theme_minimal()
+
+
 ```
 
 *Your explanation*
+
+a) the response variable is median earnings, the explanatory variable is share of women
+
+b) There is a weak linear correlation between medain earnings and share of women. The higher the share of women in a major, the lower the median earnings.
 
 # Exercise 3: Fit and interpret a numerical predictor
 
 ```{r}
 #your code here
+
+share_fit <- lm(median ~ sharewomen, data = college_recent_grads)
+summary(share_fit)
+
+augmented_data <- augment(share_fit) 
+ggplot(augmented_data, aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.75) +
+  geom_hline(yintercept = 0, linetype = "dashed", colour = "red") +
+  labs(
+    title = "Residual Plot",
+    x = "Predicted Values",
+    y = "Residuals"
+  ) + 
+  theme_minimal()
 ```
 
 *Your explanation*
+
+fitted model equation: predicted median = 56093 - 30670 x sharewomen
 
 # Exercise 4: Consider a categorical variable instead 
 
