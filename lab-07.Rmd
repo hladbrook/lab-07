@@ -27,10 +27,23 @@ glimpse(college_grad_df)
 
 ```{r}
 #your code here
+
+college_recent_grads %>% 
+  ggplot(aes(x = median)) +
+  geom_histogram(binwidth = 2500, fill = "pink") +
+  labs(title = "Histogram of Median",
+       x = "Median",
+       y = "Frequency") +
+  theme_minimal()
+
+college_recent_grads %>% 
+  select(major_category, median) %>%
+  arrange(desc(median))
 ```
 
 *Your explanation*
 
+The distribution has a positive skew. The Major category with teh highest median earnings is engineering.
 
 # Exercise 2: Exploring relationship
 
